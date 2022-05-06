@@ -29,7 +29,7 @@ public class CrimeLab {  // Класс синглтон
     public List<Crime> getCrimes() {
         return mCrimes;
     }
-    public Crime gerCrime(UUID id){ // метод возвращает объкт Crime c заданным индетификатором.
+    public Crime getCrime(UUID id){ // метод возвращает объкт Crime c заданным индетификатором.
         for (Crime crime : mCrimes){
             if (crime.getID().equals(id)){
                 return crime;

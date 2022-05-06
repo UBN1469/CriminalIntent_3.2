@@ -3,13 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Alexandr/ANDROID/Practice/AndroidPro_3/CriminalIntent_32/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1345" />
+        <entry key="..\:/Users/Alexandr/ANDROID/Practice/AndroidPro_3/CriminalIntent_32/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1345" />
         <entry key="..\:/Users/Alexandr/ANDROID/Practice/AndroidPro_3/CriminalIntent_32/app/src/main/res/layout/activity_crime.xml" value="0.14722222222222223" />
         <entry key="..\:/Users/Alexandr/ANDROID/Practice/AndroidPro_3/CriminalIntent_32/app/src/main/res/layout/activity_fragment.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/Alexandr/ANDROID/Practice/AndroidPro_3/CriminalIntent_32/app/src/main/res/layout/fragment_blank.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/Alexandr/ANDROID/Practice/AndroidPro_3/CriminalIntent_32/app/src/main/res/layout/fragment_crime.xml" value="0.264" />
         <entry key="..\:/Users/Alexandr/ANDROID/Practice/AndroidPro_3/CriminalIntent_32/app/src/main/res/layout/fragment_crime_list.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/Alexandr/ANDROID/Practice/AndroidPro_3/CriminalIntent_32/app/src/main/res/layout/fragment_test.xml" value="0.27447916666666666" />
-        <entry key="..\:/Users/Alexandr/ANDROID/Practice/AndroidPro_3/CriminalIntent_32/app/src/main/res/layout/list_item_crime.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/Alexandr/ANDROID/Practice/AndroidPro_3/CriminalIntent_32/app/src/main/res/layout/list_item_crime.xml" value="0.264" />
       </map>
     </option>
   </component>

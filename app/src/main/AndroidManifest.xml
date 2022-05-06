@@ -20,7 +20,6 @@
         <activity
             android:name=".CrimeActivity"
             android:exported="true">
-
         </activity>
     </application>
 
