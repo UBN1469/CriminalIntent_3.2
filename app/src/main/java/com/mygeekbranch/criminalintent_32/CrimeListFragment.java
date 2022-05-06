@@ -33,7 +33,7 @@ public class CrimeListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_crime_list, container,false);
         mCrimeRecyclerView = view.findViewById(R.id.crime_recycler_view);
-        mCrimeRecyclerView.setHasFixedSize(true);
+        //mCrimeRecyclerView.setHasFixedSize(true);
         mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         updateUI();
@@ -69,7 +69,8 @@ public class CrimeListFragment extends Fragment {
         public void onClick(View v) {
           //  Toast.makeText(getActivity()," cliked!", Toast.LENGTH_SHORT).show();
             //Intent intent = new Intent(getActivity(),CrimeActivity.class);
-            Intent intent = CrimeActivity.newIntent(getActivity(),mCrime.getID());
+            //Intent intent = CrimeActivity.newIntent(getActivity(),mCrime.getID());
+            Intent intent = CrimePagerActivity.newIntent(getActivity(),mCrime.getID());
             startActivity(intent);
 
         }
