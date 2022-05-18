@@ -1,6 +1,6 @@
-package com.mygeekbranch.criminalintent_32.database;
+package com.mygeekbranch.criminalintent_32.database.database;
 
-public class CrimeDbSchema {  // схема БД
+public class  CrimeDbSchema {  // схема БД
     public  static  final class CrimeTable{
         public  static final String NAME = "crimes";
         public  static  final  class Cols{

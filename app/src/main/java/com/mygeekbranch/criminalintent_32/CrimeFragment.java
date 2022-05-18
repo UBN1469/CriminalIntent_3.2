@@ -47,7 +47,12 @@ public class CrimeFragment extends Fragment {
        // UUID crimeId = (UUID) getActivity().getIntent().getSerializableExtra(CrimeActivity.EXTRA_CRIME_ID);
         UUID crimeId = (UUID)getArguments().getSerializable(ARG_CRIME_ID) ;
         mCrime = CrimeLab.getCrimeLab(getActivity()).getCrime(crimeId) ;
+    }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        CrimeLab.getCrimeLab(getActivity()).updateCrime(mCrime); // Обновление БД
     }
 
     @Nullable

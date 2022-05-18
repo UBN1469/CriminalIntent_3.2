@@ -1,9 +1,14 @@
 package com.mygeekbranch.criminalintent_32;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.mygeekbranch.criminalintent_32.database.database.CrimeBaseHelper;
+import com.mygeekbranch.criminalintent_32.database.database.CrimeCursoreWrapper;
+import com.mygeekbranch.criminalintent_32.database.database.CrimeDbSchema;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +16,7 @@ import java.util.UUID;
 
 public class CrimeLab {  // Класс синглтон
     private static CrimeLab sCrimeLab;
-    private List <Crime> mCrimes;
+
     private Context mContext;
     private SQLiteDatabase mDatabase;
 
@@ -24,31 +29,81 @@ public class CrimeLab {  // Класс синглтон
     private CrimeLab(Context context) {  // конструктор
         mContext = context.getApplicationContext();
         mDatabase = new CrimeBaseHelper(mContext).getWritableDatabase();
-        mCrimes =new ArrayList<>();
 
-        // заполняем временно лист
-//        for (int i = 0; i < 100; i++) {
-//            Crime crime = new Crime();
-//            crime.setTitle("Crime #" + i);
-//            crime.setSolved(i % 2 == 0);
-//            mCrimes.add(crime);
-//        }
+
+
     }
 
     public  void addCrime(Crime crime){
-        mCrimes.add(crime);
+        ContentValues values = getContentValues(crime);
+        mDatabase.insert(CrimeDbSchema.CrimeTable.NAME, null, values);
+
     }
 
     public List<Crime> getCrimes() {
-        return mCrimes;
-    }
-    public Crime getCrime(UUID id){ // метод возвращает объкт Crime c заданным индетификатором.
-        for (Crime crime : mCrimes){
-            if (crime.getID().equals(id)){
-                return crime;
+        List<Crime> crimes = new ArrayList<>();
+        CrimeCursoreWrapper cursor =  queryCrimes(null, null);
+
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()){
+                crimes.add(cursor.getCrime());
+                cursor.moveToNext();
             }
         }
-        return  null;
+        finally {
+            cursor.close();
+        }
+        return crimes;
+
+    }
+    public Crime getCrime(UUID id){  // метод возвращает объкт Crime c заданным индетификатором.
+        CrimeCursoreWrapper cursor  = queryCrimes(CrimeDbSchema.CrimeTable.Cols.UUID + " = ?"
+                , new String[]{id.toString()});
+       try{
+           if ( cursor.getCount() == 0){
+            return null;
+        }
+        cursor.moveToFirst();
+        return  cursor.getCrime();
+       } finally {
+           cursor.close();
+       }
+
+
+
+
+    }
+    //   Метод обновление БД
+    public  void updateCrime (Crime crime){
+        String uuidString = crime.getID().toString();
+        ContentValues  values = getContentValues(crime);
+        mDatabase.update(CrimeDbSchema.CrimeTable.NAME, values, CrimeDbSchema.CrimeTable.Cols.UUID + " = ?", new String[] {uuidString});
+
+    };
+    // Чтение из БД
+    //private Cursor queryCrimes (String whereClause, String [] whereArgs){
+    private CrimeCursoreWrapper queryCrimes(String whereClause, String [] whereArgs ){
+
+        Cursor cursor = mDatabase.query(CrimeDbSchema.CrimeTable.NAME,
+                null,
+                whereClause,
+                whereArgs,
+                null,
+                null,
+                null);
+       // return  cursor;
+        return new CrimeCursoreWrapper(cursor);
+    }
+
+    // Запись  в БД
+    private static ContentValues getContentValues (Crime crime){
+        ContentValues values = new ContentValues();
+        values.put(CrimeDbSchema.CrimeTable.Cols.UUID, crime.getID().toString());
+        values.put(CrimeDbSchema.CrimeTable.Cols.TITLE, crime.getTitle());
+        values.put(CrimeDbSchema.CrimeTable.Cols.DATE, crime.getDate().getTime());
+        values.put(CrimeDbSchema.CrimeTable.Cols.SOLVED, crime.isSolved()? 1  : 0);
+        return  values;
     }
 
 
