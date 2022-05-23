@@ -26,16 +26,17 @@ public class CrimeListFragment extends Fragment {
     private RecyclerView mCrimeRecyclerView;
     private CrimeAdapter mAdapter;
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        updateUI();
-    }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateUI();
     }
 
     @Override
@@ -76,7 +77,6 @@ public class CrimeListFragment extends Fragment {
         mCrimeRecyclerView = view.findViewById(R.id.crime_recycler_view);
         //mCrimeRecyclerView.setHasFixedSize(true);
         mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
         updateUI();
         return view;
     }

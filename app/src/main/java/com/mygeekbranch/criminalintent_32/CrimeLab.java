@@ -6,8 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.mygeekbranch.criminalintent_32.database.database.CrimeBaseHelper;
-import com.mygeekbranch.criminalintent_32.database.database.CrimeCursoreWrapper;
+import com.mygeekbranch.criminalintent_32.database.database.CrimeCursorWrapper;
 import com.mygeekbranch.criminalintent_32.database.database.CrimeDbSchema;
+import com.mygeekbranch.criminalintent_32.database.database.CrimeDbSchema.CrimeTable;
 
 
 import java.util.ArrayList;
@@ -36,13 +37,13 @@ public class CrimeLab {  // Класс синглтон
 
     public  void addCrime(Crime crime){
         ContentValues values = getContentValues(crime);
-        mDatabase.insert(CrimeDbSchema.CrimeTable.NAME, null, values);
+        mDatabase.insert(CrimeTable.NAME, null, values);
 
     }
 
     public List<Crime> getCrimes() {
         List<Crime> crimes = new ArrayList<>();
-        CrimeCursoreWrapper cursor =  queryCrimes(null, null);
+        CrimeCursorWrapper cursor =  queryCrimes(null, null);
 
         try {
             cursor.moveToFirst();
@@ -58,7 +59,7 @@ public class CrimeLab {  // Класс синглтон
 
     }
     public Crime getCrime(UUID id){  // метод возвращает объкт Crime c заданным индетификатором.
-        CrimeCursoreWrapper cursor  = queryCrimes(CrimeDbSchema.CrimeTable.Cols.UUID + " = ?"
+        CrimeCursorWrapper cursor  = queryCrimes(CrimeTable.Cols.UUID + " = ?"
                 , new String[]{id.toString()});
        try{
            if ( cursor.getCount() == 0){
@@ -78,14 +79,14 @@ public class CrimeLab {  // Класс синглтон
     public  void updateCrime (Crime crime){
         String uuidString = crime.getID().toString();
         ContentValues  values = getContentValues(crime);
-        mDatabase.update(CrimeDbSchema.CrimeTable.NAME, values, CrimeDbSchema.CrimeTable.Cols.UUID + " = ?", new String[] {uuidString});
+        mDatabase.update(CrimeTable.NAME, values, CrimeTable.Cols.UUID + " = ?", new String[] {uuidString});
 
     };
     // Чтение из БД
     //private Cursor queryCrimes (String whereClause, String [] whereArgs){
-    private CrimeCursoreWrapper queryCrimes(String whereClause, String [] whereArgs ){
+    private CrimeCursorWrapper queryCrimes(String whereClause, String [] whereArgs ){
 
-        Cursor cursor = mDatabase.query(CrimeDbSchema.CrimeTable.NAME,
+        Cursor cursor = mDatabase.query(CrimeTable.NAME,
                 null,
                 whereClause,
                 whereArgs,
@@ -93,16 +94,17 @@ public class CrimeLab {  // Класс синглтон
                 null,
                 null);
        // return  cursor;
-        return new CrimeCursoreWrapper(cursor);
+        return new CrimeCursorWrapper(cursor);
     }
 
     // Запись  в БД
     private static ContentValues getContentValues (Crime crime){
         ContentValues values = new ContentValues();
-        values.put(CrimeDbSchema.CrimeTable.Cols.UUID, crime.getID().toString());
-        values.put(CrimeDbSchema.CrimeTable.Cols.TITLE, crime.getTitle());
-        values.put(CrimeDbSchema.CrimeTable.Cols.DATE, crime.getDate().getTime());
-        values.put(CrimeDbSchema.CrimeTable.Cols.SOLVED, crime.isSolved()? 1  : 0);
+        values.put(CrimeTable.Cols.UUID, crime.getID().toString());
+        values.put(CrimeTable.Cols.TITLE, crime.getTitle());
+        values.put(CrimeTable.Cols.DATE, crime.getDate().getTime());
+        values.put(CrimeTable.Cols.SOLVED, crime.isSolved()? 1  : 0);
+        values.put(CrimeTable.Cols.SUSPECT, crime.getSuspect());
         return  values;
     }
 
